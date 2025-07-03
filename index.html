@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rishab's Portfolio with Jokes 😂</title>
+  <title>Rishab's Crazy Portfolio 💻🔥</title>
   <style>
     * {
       margin: 0;
@@ -84,11 +84,6 @@
       color: #00ffea;
     }
 
-    .hero p {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-    }
-
     section {
       padding: 4rem 2rem;
       text-align: center;
@@ -101,22 +96,17 @@
       font-style: italic;
     }
 
-    #projects {
-      color:#00ffea;
-      font-weight:bold;
-    }
-
-    #fun {
+    #projects, #fun, #ask-box {
       background: rgba(255, 255, 255, 0.03);
       padding: 3rem 2rem;
       text-align: center;
       color: #fff;
       border-radius: 10px;
-      max-width: 600px;
+      max-width: 700px;
       margin: 2rem auto;
     }
 
-    #fun button {
+    #fun button, #ask-box button {
       padding: 0.7rem 1.5rem;
       background:#00ffea;
       color:#000;
@@ -128,19 +118,16 @@
       transition: background-color 0.3s ease;
     }
 
-    #fun button:hover {
+    #fun button:hover, #ask-box button:hover {
       background-color: #00ccbb;
     }
 
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: #f39c12;
-      opacity: 0.7;
-      z-index: 9999;
-      pointer-events: none;
-      border-radius: 2px;
+    #ask-box input {
+      padding: 0.6rem;
+      width: 70%;
+      margin-top: 1rem;
+      border-radius: 6px;
+      border: none;
     }
   </style>
 </head>
@@ -151,8 +138,8 @@
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#fun">Fun Zone</a></li>
+      <li><a href="#fun">Jokes</a></li>
+      <li><a href="#ask-box">Ask Me</a></li>
     </ul>
   </nav>
 
@@ -167,15 +154,18 @@
     <p>Kuch hatke aa raha hai, bas thoda wait karo! 😎</p>
   </section>
 
-  <section id="contact">
-    <h2>📬 Contact Me</h2>
-    <p>Contact form coming soon...</p>
+  <section id="fun">
+    <h2>😂 AI-Powered Joke Generator</h2>
+    <p id="joke-text" style="font-size: 1.2rem; margin-top: 1rem;">Click the button below to get a crazy AI-powered joke!</p>
+    <button onclick="generateJoke()">Tell me a joke 🤣</button>
   </section>
 
-  <section id="fun">
-    <h2>🤖 AI-Powered Joke Generator</h2>
-    <p style="font-size: 1.2rem; margin-top: 1rem;" id="joke-text">Click the button below to get a crazy AI-powered joke! 😂</p>
-    <button onclick="generateJoke()">Get Joke 🤣</button>
+  <section id="ask-box">
+    <h2>💬 Ask Me Anything</h2>
+    <input type="text" id="user-question" placeholder="Type your question..." />
+    <br />
+    <button onclick="answerMe()">Ask</button>
+    <p id="bot-answer" style="margin-top: 1rem;"></p>
   </section>
 
   <footer>
@@ -185,16 +175,12 @@
   <script>
     // Typewriter
     const texts = ["💻 Coder", "🎮 Gamer", "🎨 Designer", "😎 Entertainer"];
-    let count = 0;
-    let i = 0;
-    let currentText = "";
-    let isDeleting = false;
+    let count = 0, i = 0, currentText = "", isDeleting = false;
 
     function type() {
       if (count === texts.length) count = 0;
       currentText = texts[count];
-
-      let displayed = isDeleting 
+      const displayed = isDeleting 
         ? currentText.substring(0, i--) 
         : currentText.substring(0, i++);
 
@@ -213,15 +199,14 @@
     }
     type();
 
-    // Countdown to July 10
+    // Countdown
     const targetDate = new Date("July 10, 2025 00:00:00").getTime();
-
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
       if (distance < 0) {
-        document.getElementById("countdown").textContent = "🎉 Projects Launched! Check back soon!";
+        document.getElementById("countdown").textContent = "🎉 Projects Launched!";
         clearInterval(countdownInterval);
         return;
       }
@@ -234,27 +219,50 @@
       document.getElementById("countdown").textContent =
         `${days}d ${hours}h ${minutes}m ${seconds}s left`;
     }
-
     const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Jokes
+    // Joke Generator
     const jokes = [
       "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
       "I told my computer I needed a break, and it said: 'No problem — I'll go to sleep.' 💤",
       "Why do Java developers wear glasses? Because they don’t see sharp! 🤓",
-      "Debugging: Being the detective in a crime movie where you are also the murderer. 🕵️‍♂️",
-      "Why did the developer go broke? Because he used up all his cache! 💸",
-      "Algorithm? More like ALGO-RHYTHM! Let’s dance! 💃🕺",
-      "I would tell you a UDP joke, but you might not get it. 📡",
-      "There are 10 types of people in the world: those who understand binary and those who don't. 1️⃣0️⃣",
-      "I changed my password to 'incorrect' so whenever I forget it, the computer reminds me: 'Your password is incorrect.' 🔐"
+      "Debugging is like being a detective in a crime movie... where you're also the murderer 😅",
+      "I changed my password to 'incorrect' so I always remember it 😂"
     ];
 
     function generateJoke() {
       const randomIndex = Math.floor(Math.random() * jokes.length);
       document.getElementById('joke-text').textContent = jokes[randomIndex];
     }
+
+    // Ask Me Anything
+    function answerMe() {
+      const q = document.getElementById("user-question").value.toLowerCase();
+      const funnyReplies = [
+        "Bhai kya hi sochta rehta hai tu 😵",
+        "Mujhe kya pata, main AI hoon bhai 😂",
+        "Abey chhod na yaar... chal chai peete hain ☕",
+        "Ruko zara... sabar karo 🤨",
+        "Ye question toh NASA wale bhi nahi puchhte! 😆",
+        "Tere jaise dimaag ka toh CPU bhi thak gaya 💻💔",
+        "Hawa mein likh de... shayad koi padh le 🌪️📜"
+      ];
+
+      let answer = funnyReplies[Math.floor(Math.random() * funnyReplies.length)];
+
+      if (q.includes("name")) answer = "I'm Rishab the Bot 😎";
+      else if (q.includes("age")) answer = "I’m timeless, like your coding dreams!";
+      else if (q.includes("love")) answer = "Coding is my true love 💖";
+      else if (q.includes("momo")) answer = "Steamed, spicy, and always ready — just like me!";
+      else if (q.includes("papa") || q.includes("father")) answer = "Aapne papa ko sawal karega? Tww pagal hoo mujii!! 😡💥";
+      else if (q.includes("built") || q.includes("developer") || q.includes("creator") || q.includes("maker")) {
+        answer = "Rishab is the legend who built me 🔥";
+      }
+
+      document.getElementById("bot-answer").textContent = answer;
+    }
   </script>
+
 </body>
 </html>
